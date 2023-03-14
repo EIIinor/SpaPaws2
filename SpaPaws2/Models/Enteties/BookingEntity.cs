@@ -24,3 +24,5 @@ internal class BookingEntity
     public ICollection<CustomerEntity> Customers = new HashSet<CustomerEntity>();
 
 }
+
+

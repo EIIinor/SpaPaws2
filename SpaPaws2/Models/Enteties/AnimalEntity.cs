@@ -14,5 +14,6 @@ internal class AnimalEntity
     [Column(TypeName = "nvarchar(20)")]
     public string AnimalBreed { get; set; } = null!;
 
+
     public ICollection<CustomerEntity> Customers = new HashSet<CustomerEntity>();
 }

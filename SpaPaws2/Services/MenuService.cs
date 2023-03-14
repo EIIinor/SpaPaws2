@@ -25,7 +25,7 @@ internal class MenuService
 
         Console.Write("Email: ");
         customer.Email = Console.ReadLine() ?? "";
-
+        Console.WriteLine();
 
 
 
@@ -43,51 +43,42 @@ internal class MenuService
         Console.Write("Bokning: \n");
         Console.WriteLine();
 
-        Console.Write("Skriv in vilken av följande behandling önskas på djuret: ");
-        Console.Write("- Bad ");
-        Console.Write("- Liten trimmning ");
-        Console.Write("- Mellan trimming ");
-        Console.Write("- Stor trimmning ");
-        Console.Write("- Kloklippning ");
-        customer.Booking = Console.ReadLine() ?? "";
+        Console.Write("Skriv in vilken av följande behandling önskas på djuret: \n");
+        Console.Write("- Bad \n");
+        Console.Write("- Liten trimmning \n");
+        Console.Write("- Mellan trimming \n");
+        Console.Write("- Stor trimmning \n");
+        Console.Write("- Kloklippning \n");
+        Console.Write(":");
+        customer.BookingType = Console.ReadLine() ?? "";
+        Console.WriteLine();
 
-
-
-        //// save customer to database
-        //var customerService = new CustomerService();
-        //await CustomerService.SaveAsync(customer);
-
-
-        AnimalEntity animal = new AnimalEntity { ... };
-        BookingEntity booking = new BookingEntity { ... };
-        await CustomerService.SaveAsync(customerGuid, animal, booking);
-
+        //save customer to database
+        var customerService = new CustomerService();
+        await CustomerService.SaveAsync(customer);
 
     }
 
 
 
+
     public async Task ListAllBookingsAsync()
     {
-        // get all customers + address from database
+        // get all bookings from database
         var customers = await CustomerService.GetAllAsync();
 
         if (customers.Any())
         {
             foreach (Customer customer in customers)
             {
-                Console.WriteLine($"Namn: {customer.FirstName} {customer.LastName}");
-                Console.WriteLine($"Telefon: {customer.PhoneNumber}");
-                Console.WriteLine($"Telefon: {customer.Email} \n");
-
-
-                Console.WriteLine($"Namn: {customer.AnimalName}  Ras:{customer.AnimalBreed} \n");
-
                 Console.WriteLine("Bokning uppgifter:");
+                Console.WriteLine($"Bokning Id: {customer.BookingId}");
                 Console.WriteLine($"Bokningstid: {customer.Datetime}");
-                Console.WriteLine($"Behandling: {customer.Booking}");
-                Console.WriteLine($"Staus: {customer.BookingStatus}");
-                Console.WriteLine();
+                Console.WriteLine($"Behandling: {customer.BookingType}");
+                Console.WriteLine($"Staus: {customer.Status}\n");
+
+                Console.WriteLine($"Kund Id: {customer.Id} Namn: {customer.FirstName} ");
+                Console.WriteLine($"Djur Id: {customer.AnimalId} Namn: {customer.AnimalName} \n");
                 Console.WriteLine();
             }
         }
@@ -99,9 +90,9 @@ internal class MenuService
 
     public async Task ListSpecificBookingAsync()
     {
-        // get a specific customer  from database
+        //get a specific customer  from database
 
-        Console.Write("Ange email på den kund du vill visa: ");
+       Console.Write("Ange email på den kund du vill visa: ");
         var email = Console.ReadLine();
 
 
@@ -115,15 +106,15 @@ internal class MenuService
                 Console.WriteLine($"Namn: {customer.FirstName} {customer.LastName}");
                 Console.WriteLine($"Telefon: {customer.PhoneNumber}");
                 Console.WriteLine($"Telefon: {customer.Email} \n");
- 
+
 
                 Console.WriteLine("Djurets uppgifter:");
                 Console.WriteLine($"Namn: {customer.AnimalName}  Ras:{customer.AnimalBreed} \n");
 
                 Console.WriteLine("Bokning uppgifter:");
                 Console.WriteLine($"Bokningstid: {customer.Datetime}");
-                Console.WriteLine($"Behandling: {customer.Booking}");
-                Console.WriteLine($"Status: {customer.BookingStatus}");
+                Console.WriteLine($"Behandling: {customer.BookingType}");
+                Console.WriteLine($"Status: {customer.Status}");
             }
             else
             {
@@ -144,78 +135,72 @@ internal class MenuService
     public async Task UpdateBookingAsync()
     {
         // update a specific customer from database
-
         Console.Write("Ange email på den kund du vill uppdatera: ");
         var email = Console.ReadLine();
-
 
         if (!string.IsNullOrEmpty(email))
         {
             var customer = await CustomerService.GetAsync(email);
             if (customer != null)
             {
-                Console.WriteLine("Fyll i de fälten du vill uppdatera. \n ");
+                Console.WriteLine("Fyll i de fälten du vill uppdatera. \n");
 
+                Console.WriteLine("Kundens uppgifter: \n");
 
-                //Console.WriteLine("Kundens uppgifter: \n");
+                Console.Write("Förnamn: ");
+                customer.FirstName = Console.ReadLine() ?? null!;
 
+                Console.Write("Efternamn: ");
+                customer.LastName = Console.ReadLine() ?? null!;
 
-                //Console.Write("Förnamn: ");
-                //customer.FirstName = Console.ReadLine() ?? null!;
+                Console.Write("Email: ");
+                customer.Email = Console.ReadLine() ?? null!;
 
-                //Console.Write("Efternamn: ");
-                //customer.LastName = Console.ReadLine() ?? null!;
+                Console.Write("Telefonnummer: ");
+                customer.PhoneNumber = Console.ReadLine() ?? null!;
 
-                //Console.Write("Email: ");
-                //customer.Email = Console.ReadLine() ?? null!;
+                Console.WriteLine();
 
-                //Console.Write("Telefonnummer: ");
-                //customer.PhoneNumber = Console.ReadLine() ?? null!;
+                Console.WriteLine("Djurets uppgifter: \n");
 
-                //Console.Write("Gatuadress: ");
-                //customer.StreetName = Console.ReadLine() ?? null!;
+                Console.Write("Djurets Namn: ");
+                customer.AnimalName = Console.ReadLine() ?? null!;
 
-                //Console.Write("Postnummer: ");
-                //customer.PostalCode = Console.ReadLine() ?? null!;
+                Console.Write("Djurets Ras: ");
+                customer.AnimalBreed = Console.ReadLine() ?? null!;
 
-                //Console.Write("Ort: ");
-                //customer.City = Console.ReadLine() ?? null!;
-
-                //Console.WriteLine();
-
-                //Console.WriteLine("Djurets uppgifter: \n");
-
-                //Console.Write("Djurets Namn: ");
-                //customer.AnimalName = Console.ReadLine() ?? null!;
-
-                //Console.Write("Djurets Ålder: ");
-                //customer.AnimalAge = Console.ReadLine() ?? null!;
-
-                //Console.Write("Djurets Ras: ");
-                //customer.AnimalBreed = Console.ReadLine() ?? null!;
-
-                //Console.WriteLine();
+                Console.WriteLine();
 
                 Console.WriteLine("Bokning: \n");
 
                 Console.Write("Behandling: ");
-                customer.Booking = Console.ReadLine() ?? null!;
+                customer.BookingType = Console.ReadLine() ?? null!;
 
-                Console.Write("Status (0 - Ej Påbörjad, 1 - Påbörjad, 2 - Avslutad): ");
-                int status = Convert.ToInt32(Console.ReadLine());
-                if (Enum.IsDefined(typeof(BookingStatus), status))
+                Console.Write("Status: ");
+                Console.Write("(0 - NotStarted, 1 - InProgress, 2 - Completed): ");
+                string statusInput = Console.ReadLine();
+
+                if (string.IsNullOrEmpty(statusInput))
                 {
-                    customer.BookingStatus = (BookingStatus)status;
+                    // Leave the status unchanged
                 }
                 else
                 {
-                    Console.WriteLine($"Felaktig inmatning. Bokningsstatusen måste vara ett tal mellan 0 och {Enum.GetValues(typeof(BookingStatus)).Length - 1}.");
-                    Console.WriteLine();
-                    return;
+                    int status = Convert.ToInt32(statusInput);
+                    if (Enum.IsDefined(typeof(BookingStatus), status))
+                    {
+                        customer.Status = (BookingStatus)status;
+                    }
+                    else
+                    {
+                        Console.WriteLine($"Felaktig inmatning. Bokningsstatusen måste vara ett tal mellan 0 och {Enum.GetValues(typeof(BookingStatus)).Length - 1}.");
+                        Console.WriteLine();
+                        return;
+                    }
                 }
 
-
                 await CustomerService.UpdateAsync(customer);
+
             }
             else
             {
@@ -229,5 +214,7 @@ internal class MenuService
             Console.WriteLine();
         }
     }
+
+
 
 }

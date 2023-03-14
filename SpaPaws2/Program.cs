@@ -10,7 +10,7 @@ while (true)
     Console.WriteLine("1. Skapa en ny kund & bokning");
     Console.WriteLine("2. Visa alla bokningar");
     Console.WriteLine("3. Visa en specefik bokning");
-    Console.WriteLine("4. Updatera en bokning");
+    Console.WriteLine("4. Updatera en kund och/eller bokning");
 
 
     Console.WriteLine("Välj ett av följande alternativ: ");
